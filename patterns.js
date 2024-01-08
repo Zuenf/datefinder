@@ -1,8 +1,10 @@
 const apos = `[\'’\`"]`
 const digitsSuffixes = `(?:st|th|rd|nd|-?(?:о?е|[ое]го|[іиы]?м|ому|є|е|ь|ів|ей|я|ьох))`
-const days = `monday|tuesday|wednesday|thursday|friday|saturday|sunday|mon|tue|tues|wed|thur|thurs|fri|sat|sun|понедельник|вторник|среда|четверг|пятница|суббота|воскресенье|понеділок|вівторок|п${apos}ятниця|субота|неділя|пн|вт|ср|чт|пт|сб|вс|нд`
+const fullDays = `monday|tuesday|wednesday|thursday|friday|saturday|sunday|понедельник|вторник|среда|четверг|пятница|суббота|воскресенье|понеділок|вівторок|п${apos}ятниця|субота|неділя`
+const shortDays = `mon|tue|tues|wed|thur|thurs|fri|sat|sun|пн|вт|ср|чт|пт|сб|вс|нд`
+const days = `${fullDays}|${shortDays}`
 const months = `(?:january|february|march|april|may|june|july|august|september|october|november|december|enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|jan\\.?|ene\\.?|feb\\.?|mar\\.?|apr\\.?|abr\\.?|may\\.?|jun\\.?|jul\\.?|aug\\.?|ago\\.?|sep\\.?|sept\\.?|oct\\.?|nov\\.?|dec\\.?|dic\\.?|январ|феврал|март|апрел|июн|июл|август|сентябр|октябр|декабр|янв\\.?|фев\\.?|мар\\.?|апр\\.?|май\\.?|июн\\.?|июл\\.?|авг\\.?|сен\\.?|окт\\.?|ноя\\.?|дек\\.?|січе?н|лют|березе?н|квіте?н|траве?н|черве?н|липе?н|серпе?н|вересе?н|жовте?н|листопад|груде?н|січ\\.?|лют\\.?|бер\\.?|кві\\.?|тра\\.?|чер\\.?|лип\\.?|сер\\.?|вер\\.?|жов\\.?|лис\\.?|гру\\.?)(?:ь|я|ого|им|ем|а)?`
-const relativeDays = `(?:сьогодні|сегодня|(?:п[оі]сл[ея])?завтра|(?:поза)?вчера|today|tomorrow|yesterday|the day before yesterday|the day after tomorrow)(?![a-zа-яєїґ])`
+const relativeDays = `(?:сьогодні|сегодня|(?:п[оі]сл[ея])?завтра|(?:поза)?вчера|today|tomorrow|yesterday|the day before yesterday|the day after tomorrow)(?![a-zа-яёєїґ])`
 const timeIntervals = `years?|months?|weeks?|days?|hours?|minutes?|seconds?|год|рік|м[еі]сяц|недел|тиж(?:де)?н|де?н[я]|час|годин|минут|хвилин|секунд`
 const positionalTokensAfter = `ago|ahead|prior|(?:тому )?назад|вперед`
 const positionalTokensBefore = `in|через|(?:наступн|попередн|следующ|предыдущ)(?:ий|ого|ем|им|е|а|ая)`
@@ -13,7 +15,7 @@ const delimiter = `(?:[.\\/\\\-]+)`
 const quotePatterns = `[«‹»›„“‟”’"❝❞❮❯⹂〝〞〟＂‚‘‛❛❜❟\`]`
 
 // Useless tokens (at least for now)
-const positionalTokens = `next|last|(?:следующ|предыдущ|наступн|попередн)(?:ий|ого|ем|им|е|а|ая)`
+const positionalTokens = `next|last|этот|тот|(?:следующ|предыдущ|наступн|попередн)(?:ий|ого|ем|им|е|а|ая)`
 const extraTokens = 'due|by|on|during|standard|daylight|savings|time|date|dated|of|to|through|between|until|at|day|дня|вечера|в|о|від|до|от'
 
 // Digits patterns
@@ -31,7 +33,8 @@ const teens = `(?:twenty|thirty|fourty|fifty|sixty|seventy|eighty|ninety|hundred
 const verbalDay = `(?:${teens}\\s*)?${verbalDays}`
 const verbalNumberDay = `(?:${teens}\\s*)*${verbalNumbers}`
 const timePositionsPatterns = `(?<timepositionToken_before>${positionalTokensBefore})\\s*(?<timepositionNumber_before>${verbalNumberDay}|\\d+)?\\s*(?<timepositionInterval_before>${timeIntervals})|(?<timepositionNumber_after>${verbalNumberDay}|\\d+\\s*)?(?<timepositionInterval_after>${timeIntervals})\\s*(?<timepositionToken_after>${positionalTokensAfter})`
-const relativeDaysPatterns = `(?<relative>${relativeDays})`
+const relativeWeekDays = `(?<positionToken_before>${positionalTokens})?\\s*(?<relative_day>${fullDays})(?![a-zа-яёєїґ])`;
+const relativeDaysPatterns = `(?<relative>(?:${relativeDays})|(?:${relativeWeekDays}))`
 
 // Date patterns
 const yyyymmPattern = `(?<year_yyyymm>${yearDigit})${delimiter}?(?<month_yyyymm>${monthDigit})`
