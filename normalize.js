@@ -151,7 +151,7 @@ const getDifferentTime = (interval, value, date = new Date()) => {
 }
 
 
-const normalizeDate = (date, relative) => {
+const normalizeDate = (date, relative = new Date()) => {
   if (date.relative) {
     return new Date(getRelative(date.relative, relative))
   }
@@ -168,7 +168,7 @@ const normalizeDate = (date, relative) => {
     if (!direction) return 'Invalid date'
     return new Date(getDifferentTime(date.timepositionInterval, date.timepositionNumber * direction, relative))
   }
-  let year = date.year ? date.year : (new Date()).getFullYear() + ''
+  let year = date.year ? date.year : relative.getFullYear() + ''
   let month = date.month ? normalizeMonth(date.month) : 0
   let day = date.day ? normalizeDay(date.day) : 0
   let hours = date.hours ? date.hours : 0
@@ -179,13 +179,13 @@ const normalizeDate = (date, relative) => {
   return new Date(finalDate.getTime() - userTimezoneOffset)
 }
 
-const extractDate = source => {
+const extractDate = (source, relative = new Date()) => {
   if (!source.groups) return new Date()
   let date = {}
   for (let key of Object.keys(source.groups)) {
     if (source.groups[key]) date[key.split(/_/g)[0]] = source.groups[key]
   }
-  return normalizeDate(date)
+  return normalizeDate(date, relative)
 }
 
 module.exports = { normalizeDate, extractDate }
