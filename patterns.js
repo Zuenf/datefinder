@@ -15,7 +15,7 @@ const delimiter = `(?:[.\\/\\\-]+)`
 const quotePatterns = `[«‹»›„“‟”’"❝❞❮❯⹂〝〞〟＂‚‘‛❛❜❟\`]`
 
 // Useless tokens (at least for now)
-const positionalTokens = `next|last|этот|тот|(?:следующ|предыдущ|наступн|попередн)(?:ий|ого|ем|им|е|а|ая)`
+const positionalTokens = `next|last|э?т(?:от|а|у|о)|(?:следующ|предыдущ|наступн|попередн)(?:ий|ого|ем|им|е|а|ая)`
 const extraTokens = 'due|by|on|during|standard|daylight|savings|time|date|dated|of|to|through|between|until|at|day|дня|вечера|в|о|від|до|от'
 
 // Digits patterns
@@ -33,7 +33,7 @@ const teens = `(?:twenty|thirty|fourty|fifty|sixty|seventy|eighty|ninety|hundred
 const verbalDay = `(?:${teens}\\s*)?${verbalDays}`
 const verbalNumberDay = `(?:${teens}\\s*)*${verbalNumbers}`
 const timePositionsPatterns = `(?<timepositionToken_before>${positionalTokensBefore})\\s*(?<timepositionNumber_before>${verbalNumberDay}|\\d+)?\\s*(?<timepositionInterval_before>${timeIntervals})|(?<timepositionNumber_after>${verbalNumberDay}|\\d+\\s*)?(?<timepositionInterval_after>${timeIntervals})\\s*(?<timepositionToken_after>${positionalTokensAfter})`
-const relativeWeekDays = `(?<positionToken_before>${positionalTokens})?\\s*(?<relative_day>${fullDays})(?![a-zа-яёєїґ])`;
+const relativeWeekDays = `(?<positionToken>${positionalTokens})?\\s*(?<relativeDay>${fullDays})(?![a-zа-яёєїґ])`;
 const relativeDaysPatterns = `(?<relative>(?:${relativeDays})|(?:${relativeWeekDays}))`
 
 // Date patterns
@@ -63,7 +63,7 @@ const monyPattern = `(?<month_mony>${months})[,\\s*]+(?<year_mony>${yearDigit})?
 
 // All date patterns
 const datePatterns = '(?:' + [
-  iso8601Pattern, mondyPattern, ydmonPattern, dmonyPattern, ddmmyyyyPattern, mmddyyyyPattern, 
+  iso8601Pattern, mondyPattern, ydmonPattern, dmonyPattern, ddmmyyyyPattern, mmddyyyyPattern,
   yyyymonddPattern, ddmonyyyyPattern, monddyyyyPattern, monthDYPattern, dmonPattern,
   monyPattern, dmyyyyPattern, mdyyyyPattern, yyyymmddhhmmssPattern, yyyymmddPattern,
   yyyymmPattern, timePositionsPatterns, relativeDaysPatterns

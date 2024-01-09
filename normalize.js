@@ -58,6 +58,16 @@ const verbalDays = [
   [9, /^(?:nine|дев.?ят[^н])/gi]
 ]
 
+const days = [
+  [0, /^(?:sunday|воскресенье|неділя)/gi],
+  [1, /^(?:monday|понедельник|понеділок)/gi],
+  [2, /^(?:tuesday|вторник|вівторок)/gi],
+  [3, /^(?:wednesday|среда)/gi],
+  [4, /^(?:thursday|четверг)/gi],
+  [5, /^(?:friday|пятница|п['’`"]ятниця)/gi],
+  [6, /^(?:saturday|суббота|субота)/gi],
+]
+
 const relativeDays = [
   [/с(?:ьо|е)годн|today/i, (currentDate) => (new Date(currentDate)) ],
   [/позавч[ео]ра|the day before yesterday/, (currentDate) => { return currentDate.setDate(currentDate.getDate() - 2) }],
@@ -144,6 +154,33 @@ const getRelative = (str, date = new Date()) => {
   return date
 }
 
+const getRelativeWeekDay = (positionalToken, day, date = new Date()) => {
+  const currentDay = date.getDay();
+
+  let dayNumber = 0;
+
+  for (let [number, pattern] of days) {
+    if (day.match(pattern)) {
+      dayNumber = number;
+      break;
+    }
+  }
+
+  let add = 0;
+
+  if (/next|(?:следующ|наступн)(?:ий|ого|ем|им|е|а|ая)/.test(positionalToken)) {
+    add = 7 - currentDay + dayNumber;
+  } else if (/эт(?:от|а|у|о)/.test(positionalToken)) {
+    add = dayNumber - currentDay;
+  } else if (/last|т(?:от|а|у|о)|(?:предыдущ|попередн)(?:ий|ого|ем|им|е|а|ая)/) {
+    add =  dayNumber - currentDay - 7;
+  }
+
+  date = date.setDate(date.getDate() + add);
+
+  return date;
+}
+
 const getDifferentTime = (interval, value, date = new Date()) => {
   for (let [pattern, f] of timeIntervals) {
     if (interval.match(pattern)) return new Date(f(value, date))
@@ -152,6 +189,9 @@ const getDifferentTime = (interval, value, date = new Date()) => {
 
 
 const normalizeDate = (date, relative = new Date()) => {
+  if (date.relativeDay && date.positionToken) {
+    return new Date(getRelativeWeekDay(date.positionToken, date.relativeDay, relative))
+  }
   if (date.relative) {
     return new Date(getRelative(date.relative, relative))
   }
