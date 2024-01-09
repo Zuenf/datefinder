@@ -168,11 +168,11 @@ const getRelativeWeekDay = (positionalToken, day, date = new Date()) => {
 
   let add = 0;
 
-  if (/next|(?:следующ|наступн)(?:ий|ого|ем|им|е|а|ая)/.test(positionalToken)) {
+  if (/next|(?:следующ|наступн)(?:ий|ого|ем|им|е|а|ая)/gi.test(positionalToken)) {
     add = 7 - currentDay + dayNumber;
-  } else if (/эт(?:от|а|у|о)/.test(positionalToken)) {
+  } else if (/эт(?:от|а|у|о)/gi.test(positionalToken)) {
     add = dayNumber - currentDay;
-  } else if (/last|т(?:от|а|у|о)|(?:предыдущ|попередн)(?:ий|ого|ем|им|е|а|ая)/) {
+  } else if (/last|т(?:от|а|у|о)|(?:предыдущ|попередн)(?:ий|ого|ем|им|е|а|ая)/gi) {
     add =  dayNumber - currentDay - 7;
   }
 
