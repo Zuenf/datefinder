@@ -58,6 +58,7 @@ const dmonyPattern = `${quotePatterns}?(?<day_dmony>${singleDayDigit}${digitsSuf
 const ydmonPattern = `(?<year_ydmon>${yearDigit})[, ]+(?<day_ydmon>${singleDayDigit}${digitsSuffixes}?|${verbalDay})(?:\\s*of\\s*|[^\S\r\n])?(?<month_ydmon>${months})`
 const mondyPattern = `(?<month_mondy>${months})\\s*(?<day_mondy>${singleDayDigit}${digitsSuffixes}?|${verbalDay})[,\\s*]+(?<year_mondy>${yearDigit})?(\\s*року|\\s*?года|\\s*[рг]\.)?`
 const dmonPattern = `${quotePatterns}?(?<day_dmon>${singleDayDigit}${digitsSuffixes}?|${verbalDay})${quotePatterns}?(?:\\s*of\\s*|[^\S\r\n])?(?<month_dmon>${months})`
+const ddmmPattern = `(?<day_ddmm>${dayDigit})${delimiter}(?<month_ddmm>${monthDigit})(?!${delimiter})`
 
 const monyPattern = `(?<month_mony>${months})[,\\s*]+(?<year_mony>${yearDigit})?(\\s*року|\\s*?года|\\s*[рг]\.)?`
 
@@ -66,7 +67,7 @@ const datePatterns = '(?:' + [
   iso8601Pattern, mondyPattern, ydmonPattern, dmonyPattern, ddmmyyyyPattern, mmddyyyyPattern,
   yyyymonddPattern, ddmonyyyyPattern, monddyyyyPattern, monthDYPattern, dmonPattern,
   monyPattern, dmyyyyPattern, mdyyyyPattern, yyyymmddhhmmssPattern, yyyymmddPattern,
-  yyyymmPattern, timePositionsPatterns, relativeDaysPatterns
+  yyyymmPattern, timePositionsPatterns, relativeDaysPatterns, ddmmPattern
 ].join('|') + ')'
 
 const fullPattern = `(?:(?<hours_before_day>${hourDigit}):(?<minutes_before_day>${hmDigit})(?: ?(?<timePeriod_before_day>${timePeriod}))?[ ,]+)?(?:(?<weekday>${days})[ ,]+)?(?:(?<hours_after_day>${hourDigit}):(?<minutes_after_day>${hmDigit})(?: ?(?<timePeriod_after_day>${timePeriod}))?[ ,]+)?${datePatterns}(?:(?:[, ]*|\\s*at\\s*)(?<hours_after_date>${hourDigit}):(?<minutes_after_date>${hmDigit})(?: ?(?<timePeriod_after_date>${timePeriod}))?)?`
