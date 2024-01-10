@@ -17,6 +17,21 @@ test('этот четверг', (t) => {
     assert.strictEqual(data[0].date.setHours(0,0,0,0), new Date('2023-01-05').setHours(0,0,0,0));
 })
 
+test('четверг', (t) => {
+    const data = findDates(`четверг`, new Date('2023-01-01'))
+    assert.strictEqual(data[0].date.setHours(0,0,0,0), new Date('2023-01-05').setHours(0,0,0,0));
+})
+
+test('16.11', (t) => {
+    const data = findDates(`16.11`, new Date('2023-01-01'))
+    assert.strictEqual(data[0].date.setHours(0,0,0,0), new Date('2023-11-16').setHours(0,0,0,0));
+})
+
+test('16.11.2024', (t) => {
+    const data = findDates(`16.11.2024`, new Date('2023-01-01'))
+    assert.strictEqual(data[0].date.setHours(0,0,0,0), new Date('2024-11-16').setHours(0,0,0,0));
+})
+
 test('2023-12-30', (t) => {
     const data = findDates(`2023-12-30`)
     assert.strictEqual(data[0].date.setHours(0,0,0,0), new Date('2023-12-30').setHours(0,0,0,0));
