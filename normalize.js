@@ -189,11 +189,13 @@ const getDifferentTime = (interval, value, date = new Date()) => {
 
 
 const normalizeDate = (date, relative = new Date()) => {
+  const relativeDate = new Date(relative.getTime());
+
   if (date.relativeDay) {
-    return new Date(getRelativeWeekDay(date.positionToken, date.relativeDay, relative))
+    return new Date(getRelativeWeekDay(date.positionToken, date.relativeDay, relativeDate))
   }
   if (date.relative) {
-    return new Date(getRelative(date.relative, relative))
+    return new Date(getRelative(date.relative, relativeDate))
   }
   if (date.timepositionToken) {
     date.timepositionNumber = date.timepositionNumber ? date.timepositionNumber : '1'
@@ -206,9 +208,9 @@ const normalizeDate = (date, relative = new Date()) => {
       if (date.timepositionToken.match(pattern)) direction = sign
     }
     if (!direction) return 'Invalid date'
-    return new Date(getDifferentTime(date.timepositionInterval, date.timepositionNumber * direction, relative))
+    return new Date(getDifferentTime(date.timepositionInterval, date.timepositionNumber * direction, relativeDate))
   }
-  let year = date.year ? date.year : relative.getFullYear() + ''
+  let year = date.year ? date.year : relativeDate.getFullYear() + ''
   let month = date.month ? normalizeMonth(date.month) : 0
   let day = date.day ? normalizeDay(date.day) : 0
   let hours = date.hours ? date.hours : 0
