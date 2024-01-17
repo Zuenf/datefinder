@@ -48,19 +48,19 @@ const ddmmyyyyPattern = `(?<day_ddmmyyyy>${dayDigit})${delimiter}(?<month_ddmmyy
 const mdyyyyPattern = `(?<month_mdyyyy>${singleMonthDigit})${delimiter}(?<day_mdyyyy>${dayDigit})${delimiter}(?<year_mdyyyy>${yearDigit})?`
 const dmyyyyPattern = `(?<day_dmyyyy>${singleDayDigit})${delimiter}(?<month_dmyyyy>${singleMonthDigit})${delimiter}(?<year_dmyyyy>${yearDigit})?`
 
-const monthDYPattern = `(?<month_monthDY>${months})\\s*(?<day_monthDY>${singleDayDigit})[,\\s]+(?<year_monthDY>${yearDigit})?`
+const monthDYPattern = `[^а-яёa-z](?<month_monthDY>${months})\\s*(?<day_monthDY>${singleDayDigit})[,\\s]+(?<year_monthDY>${yearDigit})?`
 
-const monddyyyyPattern = `(?<month_monddyyyy>${months})(?<day_monddyyyy>${dayDigit})(?<year_monddyyyy>${yearDigit})?`
+const monddyyyyPattern = `[^а-яёa-z](?<month_monddyyyy>${months})(?<day_monddyyyy>${dayDigit})(?<year_monddyyyy>${yearDigit})?`
 const ddmonyyyyPattern = `(?<day_ddmonyyyy>${dayDigit})(?<month_ddmonyyyy>${months})(?<year_ddmonyyyy>${yearDigit})?`
 const yyyymonddPattern = `(?<year_yyyymondd>${yearDigit})(?<month_yyyymondd>${months})(?<day_yyyymondd>${dayDigit})`
 
 const dmonyPattern = `${quotePatterns}?(?<day_dmony>${singleDayDigit}${digitsSuffixes}?|${verbalDay})${quotePatterns}?(?:\\s*of\\s*|[^\S\r\n])?(?<month_dmony>${months})[, ]+(?<year_dmony>${yearDigit})?(\\s*?року|\\s*?года|\\s*[рг]\.)?`
 const ydmonPattern = `(?<year_ydmon>${yearDigit})[, ]+(?<day_ydmon>${singleDayDigit}${digitsSuffixes}?|${verbalDay})(?:\\s*of\\s*|[^\S\r\n])?(?<month_ydmon>${months})`
-const mondyPattern = `(?<month_mondy>${months})\\s*(?<day_mondy>${singleDayDigit}${digitsSuffixes}?|${verbalDay})[,\\s*]+(?<year_mondy>${yearDigit})?(\\s*року|\\s*?года|\\s*[рг]\.)?`
+const mondyPattern = `[^а-яёa-z](?<month_mondy>${months})\\s*(?<day_mondy>${singleDayDigit}${digitsSuffixes}?|${verbalDay})[,\\s*]+(?<year_mondy>${yearDigit})?(\\s*року|\\s*?года|\\s*[рг]\.)?`
 const dmonPattern = `${quotePatterns}?(?<day_dmon>${singleDayDigit}${digitsSuffixes}?|${verbalDay})${quotePatterns}?(?:\\s*of\\s*|[^\S\r\n])?(?<month_dmon>${months})`
 const ddmmPattern = `(?<day_ddmm>${dayDigit})${delimiter}(?<month_ddmm>${monthDigit})(?!${delimiter})`
 
-const monyPattern = `(?<month_mony>${months})[,\\s*]+(?<year_mony>${yearDigit})?(\\s*року|\\s*?года|\\s*[рг]\.)?`
+const monyPattern = `[^а-яёa-z](?<month_mony>${months})[,\\s*]+(?<year_mony>${yearDigit})?(\\s*року|\\s*?года|\\s*[рг]\.)?`
 
 // All date patterns
 const datePatterns = '(?:' + [

@@ -57,3 +57,8 @@ test('завтра', (t) => {
     assert.strictEqual(data[0].date.setHours(0,0,0,0), new Date('2023-01-26').setHours(0,0,0,0));
 })
 
+test('получились продающими', (t) => {
+    const data = findDates(`получились продающими`, new Date('2023-01-25'))
+    assert.strictEqual(data.length, 0);
+})
+
